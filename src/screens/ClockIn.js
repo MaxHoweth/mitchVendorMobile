@@ -6,6 +6,7 @@ var fireStore;
 export default class ClockIn extends Component {
   constructor(props) {
      super(props);
+     navigation = props.navigation;
 
      const dateTimeArray = new Date().toLocaleString().split(',');
 
@@ -49,8 +50,8 @@ export default class ClockIn extends Component {
       </View>
       }
       attemptClockIn() {
-
-
+        fireStore.collection("users").doc(firebaseMain.auth().currentUser.email).update({clockedIn:true});
+        navigation.navigate('LocaleSelector')
       }
 };
 

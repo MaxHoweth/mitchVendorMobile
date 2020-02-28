@@ -109,8 +109,8 @@ export default class LoggedOut extends Component {
           .then(function(userCredential){
             if(userCredential != undefined) {
               //console.warn("LOGIN SUCCESS!!");
-              navigation.navigate('Dashboard');
-              navigation.reset({index: 0, routes: [{ name: 'Dashboard' }]});
+              navigation.navigate('LocaleSelector');
+              navigation.reset({index: 0, routes: [{ name: 'LocaleSelector' }]});
               //navigation.dispatch(StackActions.replace('Login','Dashboard'));
 
               }

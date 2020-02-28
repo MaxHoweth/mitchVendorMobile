@@ -8,6 +8,8 @@ import LoggedOut from "./src/screens/LoggedOut";
 import Dashboard from "./src/screens/Dashboard";
 import CheckIn from "./src/screens/CheckIn";
 import ClockIn from "./src/screens/ClockIn";
+//import ClockOut from "./src/screens/ClockOut";
+import LocaleSelector from "./src/screens/LocaleSelector";
 
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -67,6 +69,14 @@ export default function App() {
       options={{headerShown:false}}
       style={styles.container}
     />
+
+
+   <Stack.Screen
+     name="LocaleSelector"
+     component={LocaleSelector}
+     options={{headerShown:false}}
+     style={styles.container}
+   />
 
 
 

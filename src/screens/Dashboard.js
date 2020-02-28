@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Button, TextInput} from "react-native";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import {Linking} from 'expo';
 import { serialize} from "react-serialize"
 
+import LocaleSelector from "./LocaleSelector";
 
 var fireStore;
 
@@ -17,73 +18,62 @@ export default class DashBoard extends Component {
 
        streetAddress:'55555 Rio De Grande Ave',
        cityAndState:'Little Mexico, CA',
-     };
 
+       locale:props.route.params.selectedLocale,
+
+
+     };
+     console.warn(this.props.route.params.mapLatitude, this.props.route.params.mapLongitude, this.props.route.params.latitudeDelta,this.props.route.params.longitudeDelta);
      fireStore = firebaseMain.firestore();
 
   }
 
-  componentDidMount() {
 
-    let docRef = fireStore.collection("users").doc(firebaseMain.auth().currentUser.email);
-
-    docRef.get().then(function(doc) {
-      if (doc.exists) {
-          if(doc.data().clockedIn == false) {
-            console.warn('Not ClockedIn, Redirecting to TimeClock ');
-            let displayName = doc.data().name;
-            console.warn(displayName);
-            navigation.navigate('ClockIn',{displayName:displayName})
-          }
-      } else {
-          // doc.data() will be undefined in this case
-          console.warn("No such document!");
-      }
-      }).catch(function(error) {
-          console.warn("Error getting document:", error);
-      });
-
-    //console.warn(firebaseMain.auth().currentUser.email);
-
-  }
 
   render() {
-    return  <View style = {styles.container}>
-      <ScrollView scrollEnabled={false} style={styles.mapContainer}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          />
+        return  <View style = {styles.container}>
+          <ScrollView scrollEnabled={false} style={styles.mapContainer}>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              style={styles.map}
+              initialRegion={{
+                latitude: this.props.route.params.mapLatitude,
+                longitude: this.props.route.params.mapLongitude,
+                latitudeDelta: this.props.route.params.latitudeDelta,
+                longitudeDelta: this.props.route.params.longitudeDelta,
+              }}
+              />
 
-          <View style={styles.nextAddressContainer}>
-            <Text style={styles.nextStopLabelText}>Next Stop:</Text>
-            <Text style={styles.nextAddressText}>{this.state.streetAddress} </Text>
-            <Text style={styles.nextAddressText}>{this.state.cityAndState} </Text>
+              <View style={styles.nextAddressContainer}>
+                <Text style={styles.nextStopLabelText}>Next Stop:</Text>
+                <Text style={styles.nextAddressText}>{this.state.streetAddress} </Text>
+                <Text style={styles.nextAddressText}>{this.state.cityAndState} </Text>
+              </View>
+          </ScrollView>
+
+          <View style = {styles.footerContainer}>
+              <TouchableOpacity
+                  style={styles.footerButton}
+                  onPress={() => this.navigateToLocation()}
+                  underlayColor='#fff'>
+                  <Text style={styles.footerButtonText}>Navigate</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                  style={styles.footerButton}
+                  onPress={() => this.navigateToCheckIn()}
+                  underlayColor='#fff'>
+                  <Text style={styles.footerButtonText}>Check In</Text>
+              </TouchableOpacity>
           </View>
-      </ScrollView>
+        </View>
 
-      <View style = {styles.footerContainer}>
-          <TouchableOpacity
-              style={styles.footerButton}
-              onPress={() => this.navigateToLocation()}
-              underlayColor='#fff'>
-              <Text style={styles.footerButtonText}>Navigate</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-              style={styles.footerButton}
-              onPress={() => this.navigateToCheckIn()}
-              underlayColor='#fff'>
-              <Text style={styles.footerButtonText}>Check In</Text>
-          </TouchableOpacity>
-      </View>
-    </View>
-    }
+
+
+
+      }
+
+
+
 
     navigateToLocation() {
       var serializedAddress = serialize("29266 Ellensburg Ave, Gold Beach, Or");
@@ -117,6 +107,8 @@ const styles = StyleSheet.create({
 
 
   },
+
+
   mapContainer:{
     paddingTop:25,
 

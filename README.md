@@ -11,5 +11,5 @@ This is the mobile app which is the lifeblood of the system. The idea is that th
 The mobile app is written in Javascript and [React Native](https://reactnative.dev/) and uses [Expo](https://docs.expo.io/) for FaceID, containerization, and accelerated iteration and development. It uses the [Google Maps API](https://developers.google.com/maps/documentation) for maping, forward & reverse geocoding, and passing data directly to google maps app for directions through data URL's. The app passes JSON data objects to the [Google Firebase](https://firebase.google.com/) [Cloud Firestore](https://firebase.google.com/docs/firestore) to store data online between users and sessions. I am in the process of completing and finalizing the app enough to be approved for the Ios App Store.
 
 ### USAGE
-Currently usage and testing is only possible through Expo. Public access is not availible at this time until approval for the Ios App Store.
-If hands on testing of the app is absolutley neccesary email me at maxwellhoweth@gmail.com and acces can be hosted and shared to the Expo App through a URL
+Currently usage and testing is only possible through Expo. Public access is not available at this time until approval for the Ios App Store.
+If hands on testing of the app is absolutley neccesary email me at maxwellhoweth@gmail.com and access can be hosted and shared to the Expo App through a URL
